@@ -8,6 +8,7 @@
 #include "VNDialogueBox.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDialogueFinishedDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnSpriteLoaded, TSoftObjectPtr<UPaperSprite>, LoadedSprite, ESide, Side);
 
 class UTextBlock;
 class UImage;
@@ -25,6 +26,9 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FDialogueFinishedDelegate OnDialogueFinished;
 	
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FOnSpriteLoaded OnSpriteLoaded;
+	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void StartNewDialogue(UDataTable* InDialogueTable);
 	
@@ -38,6 +42,9 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* TextName;
 	
+	UPROPERTY(meta = (BindWidget))
+	UImage* ImageTextBlockBorder;
+	
 	int Index = 0;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dialogue", meta = (RequiredAssetDataTags = "RowStructure=/Script/VisualNovel.Dialogue"))
@@ -48,4 +55,10 @@ protected:
 	
 	bool HaveNextDialogue();
 	FDialogue GetNextDialogue();
+	
+private:
+	UPROPERTY()
+	TObjectPtr<UVNDACharacterEmotion> CurrentCharacterDataAsset;
+	
+	void FlipImage(UImage* Image, bool bFlip);
 };

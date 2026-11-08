@@ -7,6 +7,7 @@
 #include "VNBaseTypes.generated.h"
 
 class UTexture2D;
+class UVNDACharacterEmotion;
 
 UENUM(BlueprintType)
 enum class ESide : uint8
@@ -14,6 +15,19 @@ enum class ESide : uint8
 	Left, 
 	Right, 
 	Center
+};
+
+UENUM(BlueprintType)
+enum class EEmotion : uint8
+{
+	Neutral   UMETA(DisplayName = "Нейтральный/Нейтральная"),
+	Happy     UMETA(DisplayName = "Радостный/Радостная"),
+	Sad       UMETA(DisplayName = "Грустный/Грустная"),
+	Angry     UMETA(DisplayName = "Злой/Злая"),
+	Surprised UMETA(DisplayName = "Удивлён/Удивлённая"),
+	Scared    UMETA(DisplayName = "Испуган/Испуганная"),
+	Embarrassment UMETA(DisplayName = "Смущение"),
+	Seriousness   UMETA(DisplayName = "Серьёзность/Сосредоточенность")
 };
 
 USTRUCT(BlueprintType)
@@ -25,7 +39,10 @@ struct FDialogue : public FTableRowBase
 	ESide Side = ESide::Center;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "DialogueSettings")
-	UTexture2D* Face = nullptr;
+	TSoftObjectPtr<UVNDACharacterEmotion> CharacterDataAsset;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "DialogueSettings")
+	EEmotion Emotion = EEmotion::Neutral;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "DialogueSettings")
 	FText Name;

@@ -7,6 +7,7 @@
 #include "Components/VerticalBox.h"
 #include "Widgets/VNChoiceButtons.h"
 #include "Components/Image.h"
+#include "Widgets/VNImageWidget.h"
 
 void UVNDialogueDisplay::RunDialogueTable_Implementation(UDataTable* InDialogueTable)
 {
@@ -33,23 +34,12 @@ void UVNDialogueDisplay::RunDialogWithChoice_Implementation(const FDialogue& New
 	ButtonBox->AddChildToVerticalBox(ChoiceButtons);
 }
 
-void UVNDialogueDisplay::SetImageDialogue(const ESide Side, UTexture2D* Face)
+void UVNDialogueDisplay::NativeConstruct()
 {
-	switch (Side)
+	Super::NativeConstruct();
+	if (DialogueBox)
 	{
-	case ESide::Left:
-		ImageLeft->SetBrushFromTexture(Face);
-		ImageLeft->SetVisibility(ESlateVisibility::Visible);
-		ImageRight->SetVisibility(ESlateVisibility::Hidden);
-		break;
-	case ESide::Right:
-		ImageRight->SetBrushFromTexture(Face);
-		ImageLeft->SetVisibility(ESlateVisibility::Hidden);
-		ImageRight->SetVisibility(ESlateVisibility::Visible);
-		break;
-	default: 
-		ImageRight->SetVisibility(ESlateVisibility::Hidden);
-		ImageLeft->SetVisibility(ESlateVisibility::Hidden);
+		DialogueBox->OnSpriteLoaded.AddDynamic(this, &UVNDialogueDisplay::SetImageDialogue);
 	}
 }
 
@@ -63,4 +53,24 @@ void UVNDialogueDisplay::OnChoiceMadeEvent(int ChoiceIndex)
 {
 	OnChoiceMade.Broadcast(ChoiceIndex);
 	ChoiceButtons->RemoveFromParent();
+}
+
+void UVNDialogueDisplay::SetImageDialogue(TSoftObjectPtr<UPaperSprite> InSprite, ESide InSide)
+{
+	 switch (InSide)
+	 {
+	 case ESide::Left:
+	 	ImageLeft->SetImageFromSprite(InSprite);
+	 	ImageLeft->SetVisibility(ESlateVisibility::Visible);
+	 	ImageRight->SetVisibility(ESlateVisibility::Hidden);
+	 	break;
+	 case ESide::Right:
+	 	ImageRight->SetImageFromSprite(InSprite);
+	 	ImageLeft->SetVisibility(ESlateVisibility::Hidden);
+	 	ImageRight->SetVisibility(ESlateVisibility::Visible);
+	 	break;
+	 default: 
+	 	ImageRight->SetVisibility(ESlateVisibility::Hidden);
+	 	ImageLeft->SetVisibility(ESlateVisibility::Hidden);
+	 }
 }

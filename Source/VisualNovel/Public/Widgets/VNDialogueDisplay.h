@@ -12,9 +12,10 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDisplayChoiceMade, int, ChoiceIndex
 
 class UVNCustomButton;
 class UVNDialogueBox;
-class UImage;
 class UVerticalBox;
 class UVNChoiceButtons;
+class UVNImageWidget;
+class UPaperSprite;
 
 UCLASS()
 class VISUALNOVEL_API UVNDialogueDisplay : public UVNUserWidget
@@ -26,10 +27,10 @@ protected:
 	UVNDialogueBox* DialogueBox;
 	
 	UPROPERTY(meta = (BindWidget))
-	UImage* ImageLeft;
+	UVNImageWidget* ImageLeft;
 	
 	UPROPERTY(meta = (BindWidget))
-	UImage* ImageRight;
+	UVNImageWidget* ImageRight;
 	
 	UPROPERTY(meta = (BindWidget))
 	UVerticalBox* ButtonBox;
@@ -55,16 +56,19 @@ public:
 	
 	UFUNCTION(BlueprintPure)
 	UVNDialogueBox* GetDialogueBox() const { return DialogueBox; }
+	
+	virtual void NativeConstruct() override;
 
 private:
 	UPROPERTY()
 	TObjectPtr<UVNChoiceButtons> ChoiceButtons;
-	
-	void SetImageDialogue(const ESide Side, UTexture2D* Face);
 	
 	UFUNCTION()
 	void OnNextButtonClicked(int InIndex);
 	
 	UFUNCTION()
 	void OnChoiceMadeEvent(int ChoiceIndex);
+	
+	UFUNCTION()
+	void SetImageDialogue(TSoftObjectPtr<UPaperSprite> InSprite, ESide InSide);
 };
