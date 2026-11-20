@@ -63,6 +63,8 @@ private:
 	UPROPERTY()
 	TObjectPtr<UVNChoiceButtons> ChoiceButtons;
 	
+	ESide CurrentSide = ESide::Center;
+	
 	UFUNCTION()
 	void OnNextButtonClicked(int InIndex);
 	

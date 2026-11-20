@@ -45,7 +45,10 @@ struct FDialogue : public FTableRowBase
 	EEmotion Emotion = EEmotion::Neutral;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "DialogueSettings")
-	FText Name;
+	bool HideName = false;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "DialogueSettings")
+	FText CharacterName;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "DialogueSettings")
 	FText Text;

@@ -17,10 +17,18 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UImage> Image;
 	
+	UPROPERTY(Transient, meta = (BindWidgetAnimOptional))
+	TObjectPtr<UWidgetAnimation> AnimationFromLeft;
+	
+	UPROPERTY(Transient, meta = (BindWidgetAnimOptional))
+	TObjectPtr<UWidgetAnimation> AnimationFromRight;
+	
 public:
 	UFUNCTION(BlueprintCallable)
 	void SetImageFromSprite(TSoftObjectPtr<UPaperSprite> InSprite);
 	
 	UFUNCTION(BlueprintCallable)
 	void SetImageVisible(bool bVisible);
+	
+	void PlayAnimationLeftRight(bool Show, bool Left);
 };

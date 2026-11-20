@@ -17,7 +17,15 @@ public:
 	TSoftObjectPtr<UPaperSprite> GetEmotionSprite(EEmotion Emotion) const;
 	void PreloadAllEmotions(FSimpleDelegate OnComplete = FSimpleDelegate());
 	
+	FText GetNameCharacter() const
+	{
+		return NameCharacter;
+	};
+	
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "DialogueSettings")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Settings")
 	TMap<EEmotion, TSoftObjectPtr<UPaperSprite>> EmotionTextures;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Settings")
+	FText NameCharacter;
 };

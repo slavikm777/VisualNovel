@@ -6,12 +6,16 @@
 #include "Blueprint/UserWidget.h"
 #include "VNUserWidget.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class VISUALNOVEL_API UVNUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
+public:
+	virtual void NativeConstruct() override;
+	
+protected:
+	UPROPERTY(Transient, meta = (BindWidgetAnimOptional))
+	TObjectPtr<UWidgetAnimation> ShowAnimation;
 };

@@ -63,14 +63,17 @@ void UVNDialogueDisplay::SetImageDialogue(TSoftObjectPtr<UPaperSprite> InSprite,
 	 	ImageLeft->SetImageFromSprite(InSprite);
 	 	ImageLeft->SetVisibility(ESlateVisibility::Visible);
 	 	ImageRight->SetVisibility(ESlateVisibility::Hidden);
+	 	ImageLeft->PlayAnimationLeftRight(CurrentSide != InSide, true);
 	 	break;
 	 case ESide::Right:
 	 	ImageRight->SetImageFromSprite(InSprite);
 	 	ImageLeft->SetVisibility(ESlateVisibility::Hidden);
 	 	ImageRight->SetVisibility(ESlateVisibility::Visible);
+	 	ImageRight->PlayAnimationLeftRight(CurrentSide != InSide, false);
 	 	break;
 	 default: 
 	 	ImageRight->SetVisibility(ESlateVisibility::Hidden);
 	 	ImageLeft->SetVisibility(ESlateVisibility::Hidden);
 	 }
+	CurrentSide = InSide;
 }

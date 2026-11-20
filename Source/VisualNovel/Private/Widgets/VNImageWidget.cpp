@@ -35,3 +35,13 @@ void UVNImageWidget::SetImageVisible(bool bVisible)
 	if (Image)
 		Image->SetVisibility(bVisible ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 }
+
+void UVNImageWidget::PlayAnimationLeftRight(bool Show, bool Left)
+{
+	if (Show)
+	{
+		if (Left)
+			PlayAnimation(AnimationFromLeft);
+		else PlayAnimation(AnimationFromRight);
+	}
+}

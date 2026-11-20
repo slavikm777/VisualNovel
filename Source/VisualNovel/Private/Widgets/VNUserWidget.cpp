@@ -3,3 +3,12 @@
 
 #include "Widgets/VNUserWidget.h"
 
+void UVNUserWidget::NativeConstruct()
+{
+	Super::NativeConstruct();
+	
+	if (ShowAnimation)
+	{
+		PlayAnimation(ShowAnimation);
+	}
+}
